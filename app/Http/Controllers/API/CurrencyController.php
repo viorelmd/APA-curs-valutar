@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Classes\Currency;
 use App\Classes\ExchangeRate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CurrencyRequest;
@@ -13,5 +14,11 @@ class CurrencyController extends Controller
     {
         $exchangeRates = new ExchangeRate();
         return $exchangeRates->exchangeRateBetweenDateRange($currencyRequest->report_by, $currencyRequest->currency, Carbon::parse($currencyRequest->start_date), Carbon::parse($currencyRequest->end_date));
+    }
+
+    public function currencies()
+    {
+        $currencies = new Currency();
+        return $currencies->allowableCurrencies;
     }
 }

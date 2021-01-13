@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('currency', [\App\Http\Controllers\API\CurrencyController::class, 'index']);
+Route::get('currencies', [\App\Http\Controllers\API\CurrencyController::class, 'currencies']);
