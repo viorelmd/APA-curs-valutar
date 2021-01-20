@@ -158,9 +158,12 @@ class ExchangeRate
             }
         }
 
-        ksort($conversions);// TODO aici sa trebuie sa fie functia de sortare
+        $sorted = array();
+        foreach ($this->insertionSort(array_keys($conversions)) as $key) {
+            $sorted[$key] = $conversions[$key];
+        }
 
-        return $conversions;
+        return $sorted;
     }
 
     /**
@@ -237,23 +240,24 @@ class ExchangeRate
         }
     }
 
-    public function sortArr($arr){
-        $right_arr = array();
-        $left_arr = array();
-        $length = count($arr);
-        if($length <= 1){//只有一个元素的时候终止
-            return $arr;
-        }
-        $pareNum = $arr[0];
-        for($i=1;$i<$length;$i++){//从1开始，第一个元素已经有序了
-            if($arr[$i] > $pareNum){
-                $right_arr[] = $arr[$i];
-            }else{
-                $left_arr[] = $arr[$i];
+    /**
+     * Sort by method isertion sort
+     *
+     * @param $arr
+     * @return array
+     */
+    private function insertionSort($arr): array
+    {
+        for ($i = 0; $i < count($arr); $i++) {
+            $j = $i;
+            while ($j > 0 && $arr[$j] < $arr[$j-1]) {
+                $tmp = $arr[$j-1];
+                $arr[$j-1] = $arr[$j];
+                $arr[$j] = $tmp;
+                $j--;
             }
         }
-        $left_arr = $this->sortArr($left_arr);
-        $right_arr = $this->sortArr($right_arr);
-        return array_merge($left_arr,array($pareNum),$right_arr);//把中间元素加上
+
+        return $arr;
     }
 }
